@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import 'antd/dist/antd.css';
 import Form from './Form';
 import update from 'immutability-helper';
@@ -6,13 +6,13 @@ import { Card } from './Card';
 import { Pagination, Typography } from 'antd';
 import nextId from 'react-id-generator';
 import styles from './ToDo.module.scss';
-
 const { Title } = Typography;
 
 export default function ToDo() {
-  let list;
+  let localData = localStorage.getItem('list');
+  let list = JSON.parse(localData);
 
-  if (!list) {
+  if (!localData) {
     list = new Array(100).fill('').map((title, i) => ({
       id: nextId(),
       text: `ToDo N ${i + 1} `,
@@ -29,6 +29,10 @@ export default function ToDo() {
       }),
     );
   };
+
+  useEffect(() => {
+    localStorage.setItem('list', JSON.stringify(cards));
+  });
 
   const moveCard = useCallback(
     (dragIndex, hoverIndex) => {
@@ -51,7 +55,7 @@ export default function ToDo() {
 
   const indexOfLastPost = pageNum * 10;
   const indexOfFirstPost = indexOfLastPost - 10;
-  const currentPosts = cards.slice(indexOfFirstPost, indexOfLastPost);
+  let currentPosts = cards.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <div className={styles.todo}>
