@@ -1,0 +1,24 @@
+body {
+  background: #f8fdff;
+}
+
+.todo {
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+  margin: 20px auto;
+  .title_part {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+    h1 {
+      color: #5c6bc0;
+      margin-bottom: 0;
+    }
+    @media (max-width: 520px) {
+      justify-content: center;
+    }
+  }
+}
